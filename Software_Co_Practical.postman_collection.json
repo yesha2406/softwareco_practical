@@ -1,0 +1,531 @@
+{
+	"info": {
+		"_postman_id": "6dc88a43-a679-4e71-b732-06fe229f125d",
+		"name": "Software_Co_Practical",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "126975"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\":\"Test-1\",\r\n    \"last_name\":\"Shah\",\r\n    \"age\":27,\r\n    \"phone\":7896541237,\r\n    \"gender\":\"Male\",\r\n    \"email\":\"test-1@test.com\",\r\n    \"password\":\"vansh@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/signup",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseJsonData = pm.response.json();\r",
+									"var token ='Bearer ' + responseJsonData.data.token;\r",
+									"pm.environment.set('access_token', token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"yesha@test.com\",\r\n    \"password\":\"yesha@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/signin",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Admin\",\r\n    \"access_modules\":[\"create\",\"read\",\"update\",\"delete\"],\r\n    \"active\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/role",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Admin\",\r\n    \"access_modules\":[\"create\",\"read\",\"update\"],\r\n    \"active\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/role/638b459920073b7f4ac2cc99",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"role",
+								"638b459920073b7f4ac2cc99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/role/638b459520073b7f4ac2cc96",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"role",
+								"638b459520073b7f4ac2cc96"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{authApi}}/role/638b459520073b7f4ac2cc96",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"role",
+								"638b459520073b7f4ac2cc96"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{authApi}}/role?search=",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"role"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert Access Module",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"module\":\"create-2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/role/insert-access-module/638b6eb89d2b3ffd4e98c303",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"role",
+								"insert-access-module",
+								"638b6eb89d2b3ffd4e98c303"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Access Module",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"module\":\"create-2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/role/remove-access-module/638b6eb89d2b3ffd4e98c303",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"role",
+								"remove-access-module",
+								"638b6eb89d2b3ffd4e98c303"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\":\"Amisha\",\r\n    \"last_name\":\"Shah\",\r\n    \"age\":27,\r\n    \"phone\":7896541237,\r\n    \"gender\":\"Male\",\r\n    \"email\":\"amisha@test.com\",\r\n    \"password\":\"vansh@123\",\r\n    \"_role\":\"638b459520073b7f4ac2cc96\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/user",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\":\"Yesha Vansh\",\r\n    \"last_name\":\"Patel\",\r\n    \"age\":27,\r\n    \"phone\":7016444679,\r\n    \"gender\":\"Female\",\r\n    \"email\":\"yesha@test.com\",\r\n    \"password\":\"yesha@123\",\r\n    \"_role\":\"638b459520073b7f4ac2cc96\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/user/638b85c9c985597715e7d889",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"user",
+								"638b85c9c985597715e7d889"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update All User with Condition",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"updateFieldName\":\"last_name\",\r\n    \"updateFieldValue\":\"PATEL\",\r\n    \"condionalFieldName\":\"age\",\r\n    \"condionalFieldValue\":\"27\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/user",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update All User Different Data",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"differentData\":[\r\n        {\r\n            \"_id\":\"638b85c9c985597715e7d889\",\r\n            \"updateData\":{\r\n                \"last_name\":\"Patel\"\r\n            }\r\n        },\r\n        {\r\n            \"_id\":\"638ca2fe58a34da01250ea63\",\r\n            \"updateData\":{\r\n                \"first_name\":\"Mehul\",\r\n                \"last_name\":\"Shah\",\r\n                \"_role\":\"638b459520073b7f4ac2cc96\"\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/user/different",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"user",
+								"different"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authApi}}/user/638b8a1f57cc6daaf8e43fb0?Authorization={{access_token}}",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"user",
+								"638b8a1f57cc6daaf8e43fb0"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{access_token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authApi}}/user/638b890121bab06df8e7af8e?Authorization={{access_token}}",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"user",
+								"638b890121bab06df8e7af8e"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{access_token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{authApi}}/user?search=",
+							"host": [
+								"{{authApi}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
